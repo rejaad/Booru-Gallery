@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Debug Info - Booru Gallery{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto px-4 py-8">
+    <h1 class="text-2xl font-bold mb-6">Debug Information</h1>
+    
+    <div class="space-y-6">
+        <div class="bg-white shadow rounded-lg p-6">
+            <h2 class="text-xl font-semibold mb-4">Directory Information</h2>
+            <dl class="space-y-2">
+                <dt class="font-semibold">Static Folder:</dt>
+                <dd class="ml-4">{{ debug_info.static_folder }}</dd>
+                
+                <dt class="font-semibold">Images Directory:</dt>
+                <dd class="ml-4">{{ debug_info.images_dir }}</dd>
+                
+                <dt class="font-semibold">Total Files:</dt>
+                <dd class="ml-4">{{ debug_info.total_files }}</dd>
+                
+                <dt class="font-semibold">Total Images:</dt>
+                <dd class="ml-4">{{ debug_info.total_images }}</dd>
+            </dl>
+        </div>
+        
+        <div class="bg-white shadow rounded-lg p-6">
+            <h2 class="text-xl font-semibold mb-4">Sample Files</h2>
+            <ul class="list-disc ml-6">
+                {% for file in debug_info.sample_files %}
+                <li>{{ file }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        
+        <div class="bg-white shadow rounded-lg p-6">
+            <h2 class="text-xl font-semibold mb-4">Database Records</h2>
+            <div class="overflow-x-auto">
+                <table class="min-w-full">
+                    <thead>
+                        <tr class="border-b">
+                            <th class="text-left py-2">ID</th>
+                            <th class="text-left py-2">MD5</th>
+                            <th class="text-left py-2">Extension</th>
+                            <th class="text-left py-2">Expected Filename</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for record in debug_info.database_records %}
+                        <tr class="border-b">
+                            <td class="py-2">{{ record.id }}</td>
+                            <td class="py-2">{{ record.md5 }}</td>
+                            <td class="py-2">{{ record.file_ext }}</td>
+                            <td class="py-2">{{ record.expected_filename }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

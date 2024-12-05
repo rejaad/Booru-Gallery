@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Booru Gallery{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <h1 class="text-3xl font-bold mb-6">Welcome to Booru Gallery</h1>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <!-- Statistics Card -->
+        <div class="bg-white shadow rounded-lg p-6">
+            <h2 class="text-xl font-semibold mb-4">Statistics</h2>
+            <div class="space-y-2">
+                <p>Total Images: {{ stats.total_images }}</p>
+                <p>Active Images: {{ stats.active_images }}</p>
+            </div>
+        </div>
+        
+        <!-- Top Tags Card -->
+        <div class="bg-white shadow rounded-lg p-6">
+            <h2 class="text-xl font-semibold mb-4">Top Tags</h2>
+            <div class="flex flex-wrap gap-2">
+                {% for tag, count in stats.top_tags.items() %}
+                <span class="inline-block bg-blue-100 rounded px-3 py-1 text-sm font-semibold text-blue-700">
+                    {{ tag }} ({{ count }})
+                </span>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Navigation Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <a href="/gallery" class="block">
+            <div class="bg-white shadow rounded-lg p-6 hover:shadow-lg transition-shadow">
+                <h2 class="text-xl font-semibold mb-2">Browse Gallery</h2>
+                <p class="text-gray-600">Browse our collection of {{ stats.active_images }} images</p>
+            </div>
+        </a>
+        
+        <a href="/tagcloud" class="block">
+            <div class="bg-white shadow rounded-lg p-6 hover:shadow-lg transition-shadow">
+                <h2 class="text-xl font-semibold mb-2">Tag Cloud</h2>
+                <p class="text-gray-600">Explore images by tags</p>
+            </div>
+        </a>
+    </div>
+</div>
+{% endblock %}

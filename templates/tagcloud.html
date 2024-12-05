@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Tag Cloud - Booru Gallery{% endblock %}
+
+{% block content %}
+<div class="bg-white rounded-lg shadow p-6">
+    <h1 class="text-2xl font-bold mb-6">Tag Cloud</h1>
+    <div class="flex flex-wrap gap-2">
+        {% for tag, count in tags.items()|sort(reverse=true, attribute='1') %}
+        <span class="inline-block bg-blue-100 rounded px-3 py-1 text-sm font-semibold text-blue-700">
+            {{ tag }} ({{ count }})
+        </span>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

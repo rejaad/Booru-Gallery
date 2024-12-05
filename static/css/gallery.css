@@ -1,0 +1,53 @@
+.gallery-container {
+    padding: 2rem 0;
+}
+
+.gallery-title {
+    color: var(--text);
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem;
+}
+
+.gallery-item {
+    background-color: var(--card);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: var(--shadow);
+}
+
+.gallery-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow), 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.gallery-thumbnail {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
+
+.gallery-item-info {
+    padding: 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.score {
+    color: var(--accent);
+    font-weight: 500;
+}
+
+.dimensions {
+    color: var(--text-secondary);
+}

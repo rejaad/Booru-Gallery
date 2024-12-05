@@ -1,0 +1,58 @@
+from flask_sqlalchemy import SQLAlchemy
+
+db = SQLAlchemy()
+
+class Image(db.Model):
+    __tablename__ = 'images'
+
+    id = db.Column(db.Integer, primary_key=True)
+    created_at = db.Column(db.DateTime, nullable=False)
+    updated_at = db.Column(db.DateTime, nullable=False)
+    up_score = db.Column(db.Integer, default=0)
+    down_score = db.Column(db.Integer, default=0)
+    score = db.Column(db.Integer, default=0)
+    source = db.Column(db.String(255), nullable=True)
+    md5 = db.Column(db.String(32), unique=True, nullable=False)
+    rating = db.Column(db.String(16), nullable=True)
+    is_pending = db.Column(db.Boolean, default=False)
+    is_flagged = db.Column(db.Boolean, default=False)
+    is_deleted = db.Column(db.Boolean, default=False)
+    uploader_id = db.Column(db.Integer, nullable=True)
+    approver_id = db.Column(db.Integer, nullable=True)
+    last_noted_at = db.Column(db.DateTime, nullable=True)
+    last_comment_bumped_at = db.Column(db.DateTime, nullable=True)
+    fav_count = db.Column(db.Integer, default=0)
+    tag_string = db.Column(db.Text, nullable=False)
+    tag_count = db.Column(db.Integer, default=0)
+    tag_count_general = db.Column(db.Integer, default=0)
+    tag_count_artist = db.Column(db.Integer, default=0)
+    tag_count_character = db.Column(db.Integer, default=0)
+    tag_count_copyright = db.Column(db.Integer, default=0)
+    file_ext = db.Column(db.String(16), nullable=False)
+    file_size = db.Column(db.Integer, default=0)
+    image_width = db.Column(db.Integer, default=0)
+    image_height = db.Column(db.Integer, default=0)
+    parent_id = db.Column(db.Integer, default=0)
+    has_children = db.Column(db.Boolean, default=False)
+    is_banned = db.Column(db.Boolean, default=False)
+    pixiv_id = db.Column(db.String(255), nullable=True)
+    last_commented_at = db.Column(db.DateTime, nullable=True)
+    has_active_children = db.Column(db.Boolean, default=False)
+    bit_flags = db.Column(db.Integer, default=0)
+    tag_count_meta = db.Column(db.Integer, default=0)
+    has_large = db.Column(db.Boolean, default=False)
+    has_visible_children = db.Column(db.Boolean, default=False)
+    media_asset_id = db.Column(db.Integer, nullable=True)
+    file_url = db.Column(db.String(512), nullable=False)
+    large_file_url = db.Column(db.String(512), nullable=True)
+    preview_file_url = db.Column(db.String(512), nullable=True)
+    tags_general = db.Column(db.Text, nullable=True)
+    tags_artist = db.Column(db.Text, nullable=True)
+    tags_character = db.Column(db.Text, nullable=True)
+    tags_copyright = db.Column(db.Text, nullable=True)
+    tags_meta = db.Column(db.Text, nullable=True)
+    pass
+
+def init_db(app):
+    with app.app_context():
+        db.create_all()

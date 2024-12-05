@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Gallery{% endblock %}
+
+{% block content %}
+<div class="gallery-container">
+    <h1 class="gallery-title">Image Gallery</h1>
+    
+    <div class="gallery-grid">
+        {% for image in images %}
+        <div class="gallery-item">
+            <a href="{{ url_for('view_image', image_id=image.id) }}">
+                <img src="{{ url_for('static', filename='thumbnails/' ~ image.md5 ~ '.' ~ image.file_ext) }}"
+                     alt="Thumbnail"
+                     loading="lazy"
+                     class="gallery-thumbnail"
+                     width="{{ config.settings.get('thumbnails', 'width') }}"
+                     height="{{ config.settings.get('thumbnails', 'width') * (image.image_height / image.image_width) | int }}">
+            </a>
+            <div class="gallery-item-info">
+                <span class="score">Score: {{ image.score }}</span>
+                <span class="dimensions">{{ image.image_width }}x{{ image.image_height }}</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="pagination">
+        {% if pagination.has_prev %}
+            <a href="{{ url_for('gallery', page=pagination.prev_num) }}" class="pagination-link">&laquo; Previous</a>
+        {% endif %}
+        
+        {% for page in pagination.iter_pages() %}
+            {% if page %}
+                <a href="{{ url_for('gallery', page=page) }}" 
+                   class="pagination-link {% if page == pagination.page %}active{% endif %}">
+                    {{ page }}
+                </a>
+            {% else %}
+                <span class="pagination-ellipsis">&hellip;</span>
+            {% endif %}
+        {% endfor %}
+        
+        {% if pagination.has_next %}
+            <a href="{{ url_for('gallery', page=pagination.next_num) }}" class="pagination-link">Next &raquo;</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}Image #{{ image.id }}{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-6">
+    <div class="max-w-6xl mx-auto">
+        <!-- Navigation -->
+        <div class="flex justify-between items-center mb-6">
+            <div>
+                {% if prev_id %}
+                <a href="{{ url_for('view_image', image_id=prev_id) }}" 
+                   class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                    Previous
+                </a>
+                {% endif %}
+            </div>
+            
+            <h1 class="text-2xl font-bold">Image #{{ image.id }}</h1>
+            
+            <div>
+                {% if next_id %}
+                <a href="{{ url_for('view_image', image_id=next_id) }}" 
+                   class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                    Next
+                </a>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Image -->
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <img src="{{ url_for('static', filename='images/' + image.md5) }}" 
+                 alt="Image #{{ image.id }}"
+                 class="max-w-full mx-auto">
+        </div>
+
+        <!-- Metadata -->
+        <div class="mt-6 bg-white rounded-lg shadow-lg p-6">
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <h2 class="text-lg font-semibold mb-2">Image Information</h2>
+                    <dl class="grid grid-cols-2 gap-2">
+                        <dt class="font-medium">Dimensions:</dt>
+                        <dd>{{ image.image_width }}x{{ image.image_height }}</dd>
+                        
+                        <dt class="font-medium">Rating:</dt>
+                        <dd>{{ image.rating.upper() }}</dd>
+                        
+                        <dt class="font-medium">Score:</dt>
+                        <dd>{{ image.score }}</dd>
+                        
+                        <dt class="font-medium">File Size:</dt>
+                        <dd>{{ (image.file_size / 1024)|round|int }} KB</dd>
+                    </dl>
+                </div>
+                
+                <div>
+                    <h2 class="text-lg font-semibold mb-2">Tags</h2>
+                    {% for tag_type in ['general', 'character', 'copyright', 'artist'] %}
+                        {% set tags = getattr(image, 'tags_' + tag_type, '')|string %}
+                        {% if tags %}
+                        <div class="mb-2">
+                            <h3 class="font-medium text-sm text-gray-600 mb-1">{{ tag_type|title }}:</h3>
+                            <div class="flex flex-wrap gap-1">
+                                {% for tag in tags.split(',') %}
+                                    {% if tag.strip() %}
+                                    <span class="inline-block bg-gray-100 rounded px-2 py-1 text-xs text-gray-600">
+                                        {{ tag.strip() }}
+                                    </span>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

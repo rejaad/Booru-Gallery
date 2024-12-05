@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}500 - Server Error{% endblock %}
+
+{% block content %}
+<div class="error-container">
+    <div class="error-content">
+        <h1 class="error-code">500</h1>
+        <h2 class="error-title">Server Error</h2>
+        <p class="error-message">Oops! Something went wrong on our end.</p>
+        <div class="error-actions">
+            <a href="{{ url_for('index') }}" class="error-button">Go Home</a>
+            <button onclick="window.location.reload()" class="error-button">Try Again</button>
+        </div>
+    </div>
+</div>
+{% endblock %}

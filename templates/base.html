@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Image Gallery{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/themes.css') }}">
+    {% block extra_css %}{% endblock %}
+    <script>
+        // Theme management
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+
+        // Initialize theme
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || '{{ config.settings.get("ui", "default_theme") }}';
+            document.body.setAttribute('data-theme', savedTheme);
+        });
+    </script>
+</head>
+<body>
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-links">
+                <a href="{{ url_for('index') }}" class="nav-link">Home</a>
+                <a href="{{ url_for('gallery') }}" class="nav-link">Gallery</a>
+                <a href="{{ url_for('tagcloud') }}" class="nav-link">Tags</a>
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    Toggle Theme
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p class="text-center text-secondary">
+                &copy; {{ now.year }} Image Gallery
+            </p>
+        </div>
+    </footer>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
